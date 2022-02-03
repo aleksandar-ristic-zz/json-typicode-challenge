@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect, useRef } from 'react'
+import Content from './components/Content'
+import Header from './components/Header'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const API_URL = 'https://jsonplaceholder.typicode.com/'
+	const [reqType, setReqType] = useState('users')
+	const [listItems, setListItems] = useState([])
+	const [fetchError, setFetchError] = useState(null)
+
+	const buttonRef = useRef()
+
+	useEffect(() => {
+		buttonRef.current.focus()
+	}, [])
+
+	useEffect(() => {
+		const fetchItems = async () => {
+			try {
+				const response = await fetch(`${API_URL}${reqType}`)
+
+				if (!response.ok)
+					throw Error('There was problem in fetching data. Please reload.')
+
+				const data = await response.json()
+				setListItems(data)
+				setFetchError(null)
+			} catch (error) {
+				setFetchError(error.message)
+			}
+		}
+
+		;(async () => await fetchItems())()
+	}, [reqType])
+
+	return (
+		<>
+			<Header buttonRef={buttonRef} reqType={reqType} setReqType={setReqType} />
+			<Content listItems={listItems} fetchError={fetchError} />
+		</>
+	)
 }
 
-export default App;
+export default App
