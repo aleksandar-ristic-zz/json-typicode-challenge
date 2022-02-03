@@ -1,6 +1,7 @@
 import Button from './Button'
+import ButtonView from './ButtonView'
 
-const Header = ({ reqType, setReqType, buttonRef }) => {
+const Header = ({ reqType, setReqType, buttonRef, listView, setListView }) => {
 	return (
 		<form onSubmit={e => e.preventDefault()}>
 			<Button
@@ -11,6 +12,7 @@ const Header = ({ reqType, setReqType, buttonRef }) => {
 			/>
 			<Button btnText={'posts'} reqType={reqType} setReqType={setReqType} />
 			<Button btnText={'comments'} reqType={reqType} setReqType={setReqType} />
+			<ButtonView listView={listView} setListView={setListView} />
 		</form>
 	)
 }

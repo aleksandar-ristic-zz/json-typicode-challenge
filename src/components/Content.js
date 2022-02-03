@@ -1,11 +1,17 @@
-const Content = ({ listItems, fetchError }) => {
+import List from './List'
+
+import Table from './Table'
+
+const Content = ({ listItems, fetchError, listView }) => {
 	return (
-		<ul>
+		<>
 			{fetchError && <p className='error'>{fetchError}</p>}
-			{listItems &&
-				!fetchError &&
-				listItems.map(item => <li key={item.id}>{JSON.stringify(item)}</li>)}
-		</ul>
+			{listItems && !fetchError && listView ? (
+				<List items={listItems} />
+			) : (
+				<Table items={listItems} />
+			)}
+		</>
 	)
 }
 

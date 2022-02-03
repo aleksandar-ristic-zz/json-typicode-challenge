@@ -7,6 +7,7 @@ function App() {
 	const [reqType, setReqType] = useState('users')
 	const [listItems, setListItems] = useState([])
 	const [fetchError, setFetchError] = useState(null)
+	const [listView, setListView] = useState(true)
 
 	const buttonRef = useRef()
 
@@ -35,8 +36,18 @@ function App() {
 
 	return (
 		<>
-			<Header buttonRef={buttonRef} reqType={reqType} setReqType={setReqType} />
-			<Content listItems={listItems} fetchError={fetchError} />
+			<Header
+				buttonRef={buttonRef}
+				reqType={reqType}
+				setReqType={setReqType}
+				setListView={setListView}
+				listView={listView}
+			/>
+			<Content
+				listItems={listItems}
+				fetchError={fetchError}
+				listView={listView}
+			/>
 		</>
 	)
 }
